@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Videojs HlsJs plugin</title>
+
+  <link href="player/video-js.css" rel="stylesheet">
+  
+  <!-- If you'd like to support IE8 -->
+  <script src="player/videojs-ie8.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .info {
+      background-color: #eee;
+      border: thin solid #333;
+      border-radius: 3px;
+      padding: 0 5px;
+      text-align: center;
+    }
+    .video-js {
+      margin: 40px auto;
+    }
+  </style>
+</head>
+<body>
+
+<video id="video"
+       class="video-js vjs-default-skin"
+       height="300"
+       width="600"
+       autoplay
+       controls>
+  <p>
+    Your browser doesn't support video. Please <a href="http://browsehappy.com/">upgrade your browser</a> to see the
+    example.
+  </p>
+  <source src="/movie/war.mp4/index.m3u8" type="application/vnd.apple.mpegurl">
+  <source src="/mp4/war.mp4" type="video/mp4">
+</video>
+<script src="player/video.js"></script>
+<script src="player/hls.js"></script>
+<script src="player/videojs-hlsjs.js"></script>
+<script>
+  // fire up the plugin
+  videojs(document.getElementsByClassName('video-js')[0]).play();
+</script>
+</body>
+</html>
