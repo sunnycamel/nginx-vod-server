@@ -18,4 +18,4 @@ Route::get('/', function () {
 
 Route::resource('videos', 'VideoController');
 
-Route::resource('videos', 'VideoController');
+Route::get('/API/videos', 'API@videos');
