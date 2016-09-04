@@ -52,7 +52,7 @@ class VideoController extends AppBaseController
         
         if($request->hasFile('video_url')){
              $name = $request->file('video_url')->getClientOriginalName();
-             $video_url = config('app.url') . ':' . config('app.video_service_port') . '/' . $request->video_url->storeAs('mp4', $name, 'public');
+             $video_url = config('app.url') . ':' . config('app.video_service_port') . '/' . $request->video_url->storeAs('movie', $name, 'public');
         }
 
         if($request->hasFile('thumb_picture_url')){
