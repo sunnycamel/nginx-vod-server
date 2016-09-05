@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8">
-    <title> AdminLTE 2 with Laravel - @yield('htmlheader_title', 'Your title here') </title>
+    <title> Three VOD server - @yield('htmlheader_title', '简单高效的视频点播服务器') </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href="{{ asset('/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
