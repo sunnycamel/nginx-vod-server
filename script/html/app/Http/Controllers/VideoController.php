@@ -11,6 +11,9 @@ use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
+use FFMpeg\FFMpeg;
+use FFMpeg\Coordinate\TimeCode;
+
 class VideoController extends AppBaseController
 {
     /**
@@ -49,23 +52,27 @@ class VideoController extends AppBaseController
         $input = $request->all();
         $video_url = '';
         $thumb_picture_url = '';
+        $thumb_picture_name = '';
 
         $video_path = '';
         if($request->hasFile('video_url')){
              $name = $request->file('video_url')->getClientOriginalName();
+             $thumb_picture_name = $name . '.jpg';
              $video_path = $request->video_url->storeAs('movie', $name, 'public');             
              $video_url = config('app.url') . ':' . config('app.video_service_port') . '/' . $video_path;
         }
 
         if($request->hasFile('thumb_picture_url')){
              $name = $request->file('thumb_picture_url')->getClientOriginalName();
-             $thumb_picture_url = config('app.url') . ':' . config('app.http_service_port') . '/' . $request->thumb_picture_url->storeAs('thumb_pictures', $name, 'public');
+             $thumb_picture_url = config('app.url') . ':' . config('app.http_service_port') . '/' . $request->thumb_picture_url->storeAs('mp4', $name, 'public');
         }
         else{
-             $ffmpeg = FFMpeg\FFMpeg::create();
-             $ffmpeg->open(public_path() . '/' . $video_path );
-             $frame = $video->frame(FFMpeg\Coordinate\TimeCode::fromSeconds(20));
-             $frame->save(public_path() . '/' . $video_path . '.jpg');
+             $ffmpeg = FFMpeg::create(['ffmpeg.binaries'  => '/usr/bin/ffmpeg',
+                                      'ffprobe.binaries' => '/usr/bin/ffprobe']);
+             $video = $ffmpeg->open(public_path() . '/' . $video_path );
+             $frame = $video->frame(TimeCode::fromSeconds(5));
+             $frame->save(public_path() . '/mp4/' . $thumb_picture_name);
+             $thumb_picture_url =  config('app.url') . ':' . config('app.http_service_port') . '/mp4/' . $thumb_picture_name;
         }
 
         
