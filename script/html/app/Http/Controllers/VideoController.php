@@ -49,16 +49,25 @@ class VideoController extends AppBaseController
         $input = $request->all();
         $video_url = '';
         $thumb_picture_url = '';
-        
+
+        $video_path = '';
         if($request->hasFile('video_url')){
              $name = $request->file('video_url')->getClientOriginalName();
-             $video_url = config('app.url') . ':' . config('app.video_service_port') . '/' . $request->video_url->storeAs('movie', $name, 'public');
+             $video_path = $request->video_url->storeAs('movie', $name, 'public');             
+             $video_url = config('app.url') . ':' . config('app.video_service_port') . '/' . $video_path;
         }
 
         if($request->hasFile('thumb_picture_url')){
              $name = $request->file('thumb_picture_url')->getClientOriginalName();
              $thumb_picture_url = config('app.url') . ':' . config('app.http_service_port') . '/' . $request->thumb_picture_url->storeAs('thumb_pictures', $name, 'public');
         }
+        else{
+             $ffmpeg = FFMpeg\FFMpeg::create();
+             $ffmpeg->open(public_path() . '/' . $video_path );
+             $frame = $video->frame(FFMpeg\Coordinate\TimeCode::fromSeconds(20));
+             $frame->save(public_path() . '/' . $video_path . '.jpg');
+        }
+
         
         
         $video = new Video;
