@@ -12,7 +12,7 @@
             <td>{!! $video->title !!}</td>
             <td>{!! $video->description !!}</td>
             <td>{!! $video->video_url !!}</td>
-            <td>{!! $video->thumb_picture_url !!}</td>
+            <td><img src="{!! $video->thumb_picture_url !!}">  width="120"</img></td>
             <td>
                 {!! Form::open(['route' => ['videos.destroy', $video->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
